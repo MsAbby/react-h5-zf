@@ -87,6 +87,9 @@ const Index = (props) => {
             day: '两天前'
         }
     ]
+    navigator.geolocation.getCurrentPosition(location => {
+        console.log(location)
+    })
     const { value, setValue } = useState('')
     const items = colors.map((color, index) => (
         <Swiper.Item key={index}>
@@ -102,6 +105,10 @@ const Index = (props) => {
         navigate(path, { replace: true })
     }
 
+    const goMap = () => {
+        navigate('/home/map', { replace: true })
+    }
+
     return (
         <div className="home-index">
             <Swiper
@@ -111,7 +118,7 @@ const Index = (props) => {
                 {items}
             </Swiper>
             <div className="search-box">
-                <div className="left">
+                <div className="left" onClick={() => {goMap()}}>
                     <p>上海</p>
                 </div>
                 <div className="center">
@@ -171,7 +178,7 @@ const Index = (props) => {
                     {
                         cards.map(item => {
                             return (
-                                <div className="card-news-list">
+                                <div className="card-news-list" key={item.id}>
                                     <img src={item.img}></img>
                                     <div className="news-right">
                                         <h3 className="title">{item.title}</h3>

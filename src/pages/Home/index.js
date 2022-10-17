@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {useNavigate, useLocation, useState, Outlet } from 'react-router-dom';
 import { Badge, TabBar } from 'antd-mobile';
 import {
@@ -43,6 +43,11 @@ const Home = (props) => {
             },
         ]
     }
+
+    useEffect(() => {
+        const city = new window.BMapGL.LocalCity()
+        console.log(city)
+    }, [])
 
     const setRouteActive = (value) => {
         console.log(value)
