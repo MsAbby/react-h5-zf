@@ -28,3 +28,18 @@ utils.ts:757 Uncaught Error: A <Route> is only ever to be used as the child of <
 	<Routes>
 </Router>
 `
+
+
+## 报错 useHistory
+
+`js
+ERROR in ./src/pages/Home/index.js 13:18-28
+export 'useHistory' (imported as 'useHistory') was not found in 'react-router-dom' (possible exports: 
+
+// react-router-dom v5 是使用 useHistory 
+
+// v6开始 useNavigate取代了原先版本中的useHistory
+`
+
+## 问题 antd-mobile 引入tabbar 不显示
+ 1. 解决方案： 把路由写在一起， 同时引入<Outlet />： 代表展示的位置
