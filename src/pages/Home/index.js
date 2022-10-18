@@ -44,11 +44,6 @@ const Home = (props) => {
         ]
     }
 
-    useEffect(() => {
-        const city = new window.BMapGL.LocalCity()
-        console.log(city)
-    }, [])
-
     const setRouteActive = (value) => {
         console.log(value)
         navigate(value, { replace: true })

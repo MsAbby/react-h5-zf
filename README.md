@@ -43,3 +43,45 @@ export 'useHistory' (imported as 'useHistory') was not found in 'react-router-do
 
 ## 问题 antd-mobile 引入tabbar 不显示
  1. 解决方案： 把路由写在一起， 同时引入<Outlet />： 代表展示的位置
+
+ ## React Hooks 18 useEffect 执行2次或多次
+ `
+ 2.1 方式一：严格模式
+	简单粗暴，一般是StrictMode导致的，就是index.js页面的代码：
+ `
+ `
+ 2.2 方式2：使用useRef
+
+ const renderRef = useRef(true)
+    useEffect(() => {
+        // 重要!!!
+        if (renderRef.current) {
+            renderRef.current = false
+            return 
+        }
+
+        const result = fomatCityData(data.citys)
+        console.log(result)
+        if (result) {
+            setCityList(result)
+        }
+    }, [])
+ `
+
+
+## react hook使用useState更新数组，无法更新问题
+ 	#### 1. 涉及到可变对象和不可变对象，在vue和react中，如果更新可变对象时，可能会引起视图更新，这是因为，vue和react默认都是浅监听，只会监听数据的第一层，如果数据是引用类型，内层数据发生改变，并不会监听到。
+	#### 2. 解决方法：
+    ````
+	// 1. 先原数组浅拷贝，赋值给新数组
+	// 2. 再修改新数组（不影响原状态），将修改后的新数组使用setValue传递进去，这样就会引起视图更新。
+
+	const [cityList, setCityList] = useState({})
+    const [cityIndex, setCityIndex] = useState([])
+
+	// 引用数据类型，先拷贝后更新
+	setCityList({...cityList, ...result.cityList})
+	setCityIndex([...cityIndex, ...result.cityIndex])
+
+
+	````

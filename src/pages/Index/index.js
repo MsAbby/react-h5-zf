@@ -1,4 +1,4 @@
-import React, { useState} from "react";
+import React, { useState, useEffect} from "react";
 import { Swiper, Grid, Input } from 'antd-mobile'
 import { useNavigate } from 'react-router-dom';
 import { AntOutline, KeyOutline } from 'antd-mobile-icons';
@@ -90,7 +90,17 @@ const Index = (props) => {
     navigator.geolocation.getCurrentPosition(location => {
         console.log(location)
     })
-    const { value, setValue } = useState('')
+    const [value, setValue] = useState('')
+    const [city, setCity] = useState('')
+
+    useEffect(() => {
+        const city = new window.BMapGL.LocalCity()
+        city.get((list) => {
+            console.log(list.name)
+            setCity(list.name)
+        })
+    }, [])
+
     const items = colors.map((color, index) => (
         <Swiper.Item key={index}>
             <div
@@ -106,7 +116,11 @@ const Index = (props) => {
     }
 
     const goMap = () => {
-        navigate('/home/map', { replace: true })
+        navigate('/map', { replace: true })
+    }
+
+    const goCity = () => {
+        navigate('/citylist', {replace: true})
     }
 
     return (
@@ -118,8 +132,8 @@ const Index = (props) => {
                 {items}
             </Swiper>
             <div className="search-box">
-                <div className="left" onClick={() => {goMap()}}>
-                    <p>上海</p>
+                <div className="left" onClick={() => {goCity()}}>
+                    <p>{ city }</p>
                 </div>
                 <div className="center">
                     <KeyOutline fontSize={16} className="search"></KeyOutline>
@@ -131,7 +145,7 @@ const Index = (props) => {
                         }}
                         />
                 </div>
-                <AntOutline fontSize={16}/>
+                <AntOutline fontSize={16} onClick={() => {goMap()}}/>
             </div>
             <div className="home-nav">
                 <Grid columns={4} gap={6} className='grid-demo-item-head' >
