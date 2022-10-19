@@ -1,7 +1,9 @@
 import React, { useEffect, useState, useRef } from "react";
-import { NavBar } from 'antd-mobile'
+import {useNavigate} from 'react-router-dom';
 import { data } from './city'
 import { List, AutoSizer } from 'react-virtualized';
+import NavHeader from "../../components/navHeader";
+// import styles from './index.module.css'; // css module导入
 
 import './index.scss'
 
@@ -11,6 +13,7 @@ const CityList = () => {
     const [active, setActive] = useState()
     const TITLE_HEIGHT = 36
     const NAME_HEIGHT = 50
+    const navigate = useNavigate()
 
     const renderRef = useRef(true)
     const indexListRef = useRef()
@@ -67,7 +70,7 @@ const CityList = () => {
                 {
                     cityList[letter].map(item=> {
                         return (
-                            <div className="name" key={item.value}>
+                            <div className="name" key={item.value} onClick={() => {changeCity(item)}}>
                                 { item.cityName }
                             </div>
                         )
@@ -75,6 +78,13 @@ const CityList = () => {
                 }
             </div>
         )
+    }
+
+    // 切换城市
+    const changeCity = (data) => {
+        console.log(data)
+        localStorage.setItem('CITY_DATA', JSON.stringify(data))
+        navigate(-1)
     }
 
     // 滚动时， 用于获取行的信息
@@ -96,9 +106,7 @@ const CityList = () => {
         // TITLE_HEIGHT + citylist[cityIndex[index]].length * NAME_HEIGHT
         return TITLE_HEIGHT + cityList[cityIndex[index]].length * NAME_HEIGHT
     }
-    const backPage = () => {
-        console.log('11')
-    }
+    
 
 
 
@@ -106,10 +114,7 @@ const CityList = () => {
         // 根要设置100%
         // 防止顶部导航栏被滚出去： citylist: padding-top: 45px; navbar-box: margin-top: -45px
         <div className="citylist">
-            <NavBar
-                onBack={() => { backPage() }}
-                className="navbar-box"
-            >城市选择</NavBar>
+           <NavHeader>城市选择</NavHeader>
             <div className="city-list-box">
                 {/* 城市列表:  rowContent: 代表多少行 */}
                 {/* List组件 的 onRowsRendered: 滚动时，拿到页面中渲染行的信息（startIndex） */}
@@ -152,6 +157,7 @@ const CityList = () => {
                     })   
                 }
             </ul>
+            {/* <div className={styles.test}>测试css module</div> */}
         </div>
     )
 }
