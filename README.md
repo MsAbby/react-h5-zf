@@ -72,7 +72,8 @@ export 'useHistory' (imported as 'useHistory') was not found in 'react-router-do
 ## react hook使用useState更新数组，无法更新问题
  	#### 1. 涉及到可变对象和不可变对象，在vue和react中，如果更新可变对象时，可能会引起视图更新，这是因为，vue和react默认都是浅监听，只会监听数据的第一层，如果数据是引用类型，内层数据发生改变，并不会监听到。
 	#### 2. 解决方法：
-    ````
+
+    `
 	// 1. 先原数组浅拷贝，赋值给新数组
 	// 2. 再修改新数组（不影响原状态），将修改后的新数组使用setValue传递进去，这样就会引起视图更新。
 
@@ -84,4 +85,9 @@ export 'useHistory' (imported as 'useHistory') was not found in 'react-router-do
 	setCityIndex([...cityIndex, ...result.cityIndex])
 
 
-	````
+	`
+
+
+## 功能
+1. 城市列表展示
+2. 地图找房页面渲染
